@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mark G. Lim — Developer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f5f2;
+    --white: #ffffff;
+    --ink: #111111;
+    --ink-2: #444444;
+    --ink-3: #888888;
+    --accent: #c8440a;
+    --accent-light: #fdf0ea;
+    --border: #e0dcd8;
+    --surface: #ffffff;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(247,245,242,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--ink-3);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-badge {
+    font-size: 11px;
+    background: var(--accent);
+    color: white;
+    padding: 4px 10px;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .hero {
+    padding: 80px 48px 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards 0.1s;
+  }
+
+  .hero-meta-line { flex: 1; height: 1px; background: var(--border); }
+
+  .hero-meta-text {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 64px;
+    align-items: end;
+    padding-bottom: 64px;
+  }
+
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(60px, 9vw, 96px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+
+  .hero-name span {
+    display: block;
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 700;
+  }
+
+  .hero-right {
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.35s;
+  }
+
+  .hero-tagline {
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.8;
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  .hero-tagline strong { color: var(--ink); font-weight: 500; }
+
+  .hero-actions { display: flex; flex-direction: column; gap: 10px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 24px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border: 1.5px solid;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+  }
+
+  .btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
+  .btn-primary:hover { background: #a8360a; border-color: #a8360a; }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--border); }
+  .btn-ghost:hover { border-color: var(--ink); }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.5s;
+  }
+
+  .stat { padding: 28px 0; border-right: 1px solid var(--border); }
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label { font-size: 12px; color: var(--ink-3); letter-spacing: 0.04em; }
+
+  section {
+    padding: 80px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 56px;
+  }
+
+  .section-num { font-family: var(--serif); font-size: 13px; font-style: italic; color: var(--accent); }
+  .section-rule { height: 1px; background: var(--border); }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(30px, 4vw, 42px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 56px;
+    margin-top: -36px;
+  }
+
+  .section-title em { font-style: italic; font-weight: 400; color: var(--ink-3); }
+
+  .skills-table { width: 100%; border-collapse: collapse; }
+
+  .skills-table tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  .skills-table tr:hover { background: var(--accent-light); }
+
+  .skills-table td { padding: 16px 0; font-size: 14px; }
+  .skills-table td:first-child { font-weight: 500; color: var(--ink); width: 220px; }
+  .skills-table td:nth-child(2) { color: var(--ink-3); font-size: 13px; }
+  .skills-table td:last-child { text-align: right; }
+
+  .level-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+  }
+
+  .pill-capable  { background: var(--accent-light); color: var(--accent); }
+  .pill-familiar { background: #f0f0f0; color: var(--ink-2); }
+  .pill-learning { background: #f7f7f7; color: var(--ink-3); }
+
+  /* ── PROJECT CARDS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .project-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    text-align: left;
+    font-family: inherit;
+    padding: 0;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+  }
+
+  .project-thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--bg);
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .project-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .project-card:hover .project-thumb img { transform: scale(1.04); }
+
+  .project-thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--accent-light) 0%, #fce4d4 100%);
+    color: var(--accent);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .project-body { padding: 24px 26px 28px; }
+
+  .project-num {
+    font-family: var(--serif);
+    font-size: 12px;
+    font-style: italic;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+
+  .project-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .project-type {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+
+  .project-desc {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .tag { font-size: 11px; padding: 5px 10px; border: 1px solid var(--border); color: var(--ink-3); background: var(--bg); }
+  .tag-key { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+  .project-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 18px;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(17,17,17,0.78);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .modal-overlay.open {
+    display: flex;
+    opacity: 1;
+  }
+
+  .modal {
+    background: var(--white);
+    max-width: 880px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+  }
+
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.92);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--ink);
+    transition: all 0.2s;
+  }
+
+  .modal-close:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+  .modal-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .modal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .modal-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--accent-light) 0%, #fce4d4 100%);
+    color: var(--accent);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    text-align: center;
+    padding: 40px;
+  }
+
+  .modal-body { padding: 36px 44px 44px; }
+
+  .modal-type {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .modal-title {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+    line-height: 1.1;
+  }
+
+  .modal-desc {
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.85;
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .modal-section-label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+    margin-top: 28px;
+    margin-bottom: 12px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .modal-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 8px;
+  }
+
+  .modal-list li {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    padding-left: 18px;
+    position: relative;
+    font-weight: 300;
+  }
+
+  .modal-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .modal-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+
+  .modal-link:hover { opacity: 0.7; }
+
+  body.modal-locked { overflow: hidden; }
+
+  .timeline { display: grid; gap: 0; }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .timeline-item:last-child { border-bottom: none; }
+
+  .tl-date { font-size: 12px; color: var(--ink-3); letter-spacing: 0.04em; padding-top: 4px; }
+
+  .tl-company {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .tl-role {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+
+  .tl-desc { font-size: 14px; color: var(--ink-2); line-height: 1.8; font-weight: 300; }
+
+  .edu-list { display: grid; gap: 1px; background: var(--border); }
+
+  .edu-item {
+    background: var(--white);
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    transition: background 0.2s;
+  }
+
+  .edu-item:hover { background: var(--accent-light); }
+
+  .edu-school { font-family: var(--serif); font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .edu-course { font-size: 13px; color: var(--ink-3); font-weight: 300; }
+
+  .edu-year {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    border: 1px solid var(--accent);
+    padding: 6px 14px;
+  }
+
+  .traits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .trait { background: var(--white); padding: 32px 28px; transition: background 0.2s; }
+  .trait:hover { background: var(--accent-light); }
+
+  .trait-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .trait-text { font-size: 14px; color: var(--ink-2); line-height: 1.75; font-weight: 300; }
+
+  .contact-strip {
+    background: var(--ink);
+    color: white;
+    padding: 72px 48px;
+  }
+
+  .contact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .contact-heading {
+    font-family: var(--serif);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .contact-heading em { font-style: italic; font-weight: 400; color: #aaaaaa; }
+  .contact-sub { font-size: 14px; color: #999999; font-weight: 300; }
+
+  .contact-details { display: flex; flex-direction: column; gap: 12px; text-align: right; }
+
+  .contact-link {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 300;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .contact-link:hover { color: #f0a070; }
+
+  footer {
+    background: #0a0a0a;
+    padding: 24px 48px;
+    font-size: 12px;
+    color: #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .full-rule {
+    height: 1px;
+    background: var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+    box-sizing: content-box;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    section, .hero { padding-left: 24px; padding-right: 24px; }
+    .nav-inner { padding: 14px 24px; }
+    .nav-links, .nav-badge { display: none; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .modal-body { padding: 28px 28px 32px; }
+    .modal-title { font-size: 26px; }
+    .timeline-item { grid-template-columns: 1fr; gap: 8px; }
+    .traits-grid { grid-template-columns: 1fr 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .contact-details { text-align: left; }
+    .contact-link { justify-content: flex-start; }
+    footer { flex-direction: column; gap: 6px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .traits-grid { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: 1fr; }
+    .stat { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">Mark G. Lim</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <span class="nav-badge">Open to work</span>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-meta">
+    <div class="hero-meta-line"></div>
+    <div class="hero-meta-text">IT Student · Developer · Davao Region, PH</div>
+    <div class="hero-meta-line"></div>
+  </div>
+  <div class="hero-grid">
+    <div>
+      <h1 class="hero-name">
+        Mark<br>
+        <span>Lim.</span>
+      </h1>
+    </div>
+    <div class="hero-right">
+      <p class="hero-tagline">
+        First-year IT student with a <strong>genuine interest in automation and scripting.</strong> I build things to solve real problems, learn fast, and I am not afraid to admit what I am still learning.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">See my work</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Real projects built</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">ICT</div>
+      <div class="stat-label">SHS — Mobile & Web track</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Remote</div>
+      <div class="stat-label">Available — flexible hours</div>
+    </div>
+  </div>
+</div>
+
+<section class="reveal" id="skills">
+  <div class="section-header">
+    <div class="section-num">i.</div>
+    <div class="section-rule"></div>
+  </div>
+  <h2 class="section-title">Skills & <em>tools</em></h2>
+  <table class="skills-table">
+    <tbody>
+      <tr>
+        <td>Google Apps Script</td>
+        <td>Event triggers, conditional automation, Sheets manipulation</td>
+        <td><span class="level-pill pill-capable">Capable</span></td>
+      </tr>
+      <tr>
+        <td>JavaScript</td>
+        <td>Core logic, DOM, scripting basics</td>
+        <td><span class="level-pill pill-familiar">Familiar</span></td>
+      </tr>
+      <tr>
+        <td>HTML / CSS</td>
+        <td>Markup, layouts, basic styling</td>
+        <td><span class="level-pill pill-familiar">Familiar</span></td>
+      </tr>
+      <tr>
+        <td>GoHighLevel</td>
+        <td>CRM pipelines, contact management, workflow concepts</td>
+        <td><span class="level-pill pill-familiar">Familiar</span></td>
+      </tr>
+      <tr>
+        <td>Python</td>
+        <td>Syntax, basic programs, actively learning</td>
+        <td><span class="level-pill pill-learning">Learning</span></td>
+      </tr>
+      <tr>
+        <td>Java</td>
+        <td>OOP basics, coursework level</td>
+        <td><span class="level-pill pill-learning">Learning</span></td>
+      </tr>
+      <tr>
+        <td>SQL</td>
+        <td>Basic queries, SELECTs, JOINs</td>
+        <td><span class="level-pill pill-learning">Learning</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="full-rule"></div>
+
+<section class="reveal" id="projects">
+  <div class="section-header">
+    <div class="section-num">ii.</div>
+    <div class="section-rule"></div>
+  </div>
+  <h2 class="section-title">Things I've <em>built</em></h2>
+  <div class="projects-grid">
+
+    <button class="project-card" data-project="va-hub">
+      <div class="project-thumb">
+        <img src="images/va-hub.png" alt="VA Automation Hub">
+      </div>
+      <div class="project-body">
+        <div class="project-num">01</div>
+        <div class="project-title">VA Automation Hub</div>
+        <div class="project-type">Internal Tool · Python · Flask</div>
+        <p class="project-desc">A custom internal tool I built to automate the repetitive data-entry tasks at my current job — handling 10,000+ rows of data per month across multiple carriers and pipelines.</p>
+        <div class="project-tags">
+          <span class="tag tag-key">Python</span>
+          <span class="tag tag-key">Flask</span>
+          <span class="tag tag-key">Automation</span>
+          <span class="tag">Pipelines</span>
+        </div>
+        <div class="project-cta">View details →</div>
+      </div>
+    </button>
+
+    <button class="project-card" data-project="mapogo">
+      <div class="project-thumb">
+        <img src="images/mapogo-leaderboard.png" alt="Mapogo Agent Leaderboard">
+      </div>
+      <div class="project-body">
+        <div class="project-num">02</div>
+        <div class="project-title">Mapogo Agent Leaderboard</div>
+        <div class="project-type">Automation · Google Apps Script</div>
+        <p class="project-desc">A live leaderboard built in Google Apps Script that automatically ranks agents based on enrollment data, with dynamic avatar tiers and a full history table.</p>
+        <div class="project-tags">
+          <span class="tag tag-key">Triggers</span>
+          <span class="tag tag-key">Conditional logic</span>
+          <span class="tag">Google Sheets</span>
+        </div>
+        <div class="project-cta">View details →</div>
+      </div>
+    </button>
+
+    <button class="project-card" data-project="ethical-odyssey">
+      <div class="project-thumb">
+        <div class="project-thumb-placeholder">Ethical Odyssey<br><span style="font-size:13px; opacity:0.7;">2D Pixel RPG</span></div>
+      </div>
+      <div class="project-body">
+        <div class="project-num">03</div>
+        <div class="project-title">Ethical Odyssey</div>
+        <div class="project-type">2D Pixel RPG · Capstone Project</div>
+        <p class="project-desc">A fully playable 2D pixel RPG built as my Senior High School capstone. Core mechanic is a branching decision system with ethical, neutral, and non-ethical paths.</p>
+        <div class="project-tags">
+          <span class="tag tag-key">Branching logic</span>
+          <span class="tag tag-key">State management</span>
+          <span class="tag">Game design</span>
+        </div>
+        <div class="project-cta">View details →</div>
+      </div>
+    </button>
+
+    <button class="project-card" data-project="ghl">
+      <div class="project-thumb">
+        <img src="images/ghl-pipeline.png" alt="GoHighLevel CRM Pipeline">
+      </div>
+      <div class="project-body">
+        <div class="project-num">04</div>
+        <div class="project-title">CRM & Workflow Exposure</div>
+        <div class="project-type">GoHighLevel · SaaS · Pipelines</div>
+        <p class="project-desc">Daily hands-on work in GoHighLevel — managing 6,900+ opportunities across multiple pipeline stages. Practical understanding of how SaaS tools handle real business workflows.</p>
+        <div class="project-tags">
+          <span class="tag">GoHighLevel</span>
+          <span class="tag">CRM</span>
+          <span class="tag">Pipelines</span>
+        </div>
+        <div class="project-cta">View details →</div>
+      </div>
+    </button>
+
+  </div>
+</section>
+
+<!-- PROJECT MODALS -->
+<div class="modal-overlay" id="modal-va-hub" data-modal>
+  <div class="modal">
+    <button class="modal-close" data-close>×</button>
+    <div class="modal-image">
+      <img src="images/va-hub.png" alt="VA Automation Hub interface">
+    </div>
+    <div class="modal-body">
+      <div class="modal-type">Internal Tool · Python · Flask</div>
+      <h3 class="modal-title">VA Automation Hub</h3>
+      <p class="modal-desc">A custom internal automation tool I built to handle the repetitive data-entry tasks at my current job. Before this existed, processing 10,000+ rows of monthly carrier commission data was almost entirely manual. The Hub now handles parsing, member matching, and pipeline routing in a fraction of the time.</p>
+
+      <div class="modal-section-label">What it does</div>
+      <ul class="modal-list">
+        <li>Parses carrier commission files (XLSX / PDF) and detects the carrier from column structure automatically</li>
+        <li>Filters extracted rows against an internal agent database before importing</li>
+        <li>Handles DOB retrieval, plan comparison, and direct/quick audit workflows</li>
+        <li>Syncs cleaned data back into GoHighLevel via API</li>
+        <li>Runs locally on a Flask server with a clean dark-mode dashboard UI</li>
+      </ul>
+
+      <div class="modal-section-label">Why it matters</div>
+      <ul class="modal-list">
+        <li>Real production tool — actively used to process 10,000+ rows per month</li>
+        <li>Built end to end: backend logic, API integration, and frontend UI</li>
+        <li>Solves a concrete business problem instead of being a tutorial project</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-mapogo" data-modal>
+  <div class="modal">
+    <button class="modal-close" data-close>×</button>
+    <div class="modal-image">
+      <img src="images/mapogo-leaderboard.png" alt="Mapogo Daily Closers Leaderboard">
+    </div>
+    <div class="modal-body">
+      <div class="modal-type">Automation · Google Apps Script</div>
+      <h3 class="modal-title">Mapogo Agent Leaderboard</h3>
+      <p class="modal-desc">A live leaderboard system built in Google Apps Script that automatically ranks agents based on daily enrollment data. Originally built to replace a manual spreadsheet that had to be updated by hand every morning — this version updates itself.</p>
+
+      <div class="modal-section-label">What it does</div>
+      <ul class="modal-list">
+        <li>Event-driven triggers fire on every data change — no manual refresh</li>
+        <li>Top 3 standings auto-populate with agent photos, names, and policy counts</li>
+        <li>Daily data entry table tracks MAPDs, AORs, LIFE, and HIP across all agents</li>
+        <li>Movement tracker shows position changes day-over-day with arrow indicators</li>
+        <li>Full history table with manual input support for corrections</li>
+      </ul>
+
+      <div class="modal-section-label">Why it matters</div>
+      <ul class="modal-list">
+        <li>Demonstrates trigger-based automation, conditional logic, and data binding</li>
+        <li>Real tool used by a real team — not a coding exercise</li>
+        <li>Shows how a small script can replace a recurring manual process</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-ethical-odyssey" data-modal>
+  <div class="modal">
+    <button class="modal-close" data-close>×</button>
+    <div class="modal-image">
+      <div class="modal-image-placeholder">Ethical Odyssey<br><span style="font-size:14px; opacity:0.7; font-style:normal;">2D Pixel RPG · STI Tagum Capstone</span></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-type">2D Pixel RPG · Capstone Project</div>
+      <h3 class="modal-title">Ethical Odyssey</h3>
+      <p class="modal-desc">A fully playable 2D pixel RPG developed as my Senior High School capstone at STI Tagum College. The game's core mechanic is a branching decision system — every choice the player makes is classified as ethical, neutral, or non-ethical, and the story routes accordingly.</p>
+
+      <div class="modal-section-label">What I built</div>
+      <ul class="modal-list">
+        <li>Branching dialogue system with ethical / neutral / non-ethical decision tree</li>
+        <li>Player state tracking that persists choices across the entire playthrough</li>
+        <li>Story routing logic that changes outcomes based on cumulative decisions</li>
+        <li>Custom pixel art and tile-based level design</li>
+      </ul>
+
+      <div class="modal-section-label">Why it matters</div>
+      <ul class="modal-list">
+        <li>Designing branching logic taught me to map decision trees before coding — a habit that carries directly into scripting and automation</li>
+        <li>State management across long playthroughs gave me real practice with conditional flows</li>
+        <li>Successfully defended as my SHS capstone project</li>
+      </ul>
+
+      <a href="https://web.facebook.com/profile.php?id=61574556643287" class="modal-link" target="_blank" rel="noopener">Visit the Ethical Odyssey Facebook page →</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-ghl" data-modal>
+  <div class="modal">
+    <button class="modal-close" data-close>×</button>
+    <div class="modal-image">
+      <img src="images/ghl-pipeline.png" alt="GoHighLevel pipeline view">
+    </div>
+    <div class="modal-body">
+      <div class="modal-type">GoHighLevel · SaaS · Pipelines</div>
+      <h3 class="modal-title">CRM & Workflow Exposure</h3>
+      <p class="modal-desc">Through my current role at Senior Benefits Agency, I work daily inside GoHighLevel — managing 6,900+ opportunities across pipeline stages including New Lead, Submitted, Pending, RFI, and Pending Resubmission. While I am a user rather than a builder of the platform, this hands-on exposure gave me a working mental model of how SaaS tools handle real business workflows.</p>
+
+      <div class="modal-section-label">What I do day to day</div>
+      <ul class="modal-list">
+        <li>Move opportunities through pipeline stages based on client status updates</li>
+        <li>Manage contact records, opportunity sources, and follow-up workflows</li>
+        <li>Identify edge cases and pain points that my VA Automation Hub later solved</li>
+      </ul>
+
+      <div class="modal-section-label">Why it matters</div>
+      <ul class="modal-list">
+        <li>Real-world SaaS exposure at scale — not a tutorial or sandbox account</li>
+        <li>Understand how end users actually interact with software, which makes me a better builder</li>
+        <li>Direct insight into the kinds of workflows SaaS companies build for their customers</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="full-rule"></div>
+
+<section class="reveal" id="experience">
+  <div class="section-header">
+    <div class="section-num">iii.</div>
+    <div class="section-rule"></div>
+  </div>
+  <h2 class="section-title">Where I've <em>worked</em></h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="tl-date">2025 – Present</div>
+      <div>
+        <div class="tl-company">Senior Benefits Agency</div>
+        <div class="tl-role">Data Entry Specialist</div>
+        <p class="tl-desc">My first formal professional role. I handle data entry and records management using GoHighLevel as the primary CRM. Gained practical understanding of how client data flows through a SaaS platform, how pipelines are structured, and how the system ties together different parts of a business workflow.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-date">2024 — SHS Immersion</div>
+      <div>
+        <div class="tl-company">City Council of Tagum</div>
+        <div class="tl-role">Work Immersion Trainee</div>
+        <p class="tl-desc">Completed a structured work immersion as part of my Senior High School curriculum. Gained exposure to professional office culture, government documentation processes, and working within a formal institutional environment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-rule"></div>
+
+<section class="reveal" id="education">
+  <div class="section-header">
+    <div class="section-num">iv.</div>
+    <div class="section-rule"></div>
+  </div>
+  <h2 class="section-title">Where I <em>studied</em></h2>
+  <div class="edu-list">
+    <div class="edu-item">
+      <div>
+        <div class="edu-school">University of Mindanao — Tagum College</div>
+        <div class="edu-course">Bachelor of Science in Information Technology · In progress</div>
+      </div>
+      <span class="edu-year">2025 – Present</span>
+    </div>
+    <div class="edu-item">
+      <div>
+        <div class="edu-school">STI Tagum College</div>
+        <div class="edu-course">Senior High School · ICT — Mobile App & Web Development · Graduated</div>
+      </div>
+      <span class="edu-year">2023 – 2025</span>
+    </div>
+  </div>
+</section>
+
+<div class="full-rule"></div>
+
+<section class="reveal">
+  <div class="section-header">
+    <div class="section-num">v.</div>
+    <div class="section-rule"></div>
+  </div>
+  <h2 class="section-title">What I <em>bring</em></h2>
+  <div class="traits-grid">
+    <div class="trait">
+      <div class="trait-label">Automation mindset</div>
+      <p class="trait-text">When I see a repetitive process, my first instinct is to ask how it can be scripted. That habit is what led me to build the Mapogo leaderboard system.</p>
+    </div>
+    <div class="trait">
+      <div class="trait-label">Logical thinker</div>
+      <p class="trait-text">Building Ethical Odyssey's branching dialogue system taught me to map out decision trees before writing a single line — a habit that carries directly into scripting work.</p>
+    </div>
+    <div class="trait">
+      <div class="trait-label">Written communicator</div>
+      <p class="trait-text">English is my second language, but I am comfortable with written async communication — clear, direct, and respectful of everyone's time.</p>
+    </div>
+    <div class="trait">
+      <div class="trait-label">Reliable & flexible</div>
+      <p class="trait-text">I take work seriously. I am open to different schedules, time zones, and team setups — including remote async teams.</p>
+    </div>
+    <div class="trait">
+      <div class="trait-label">Fast learner</div>
+      <p class="trait-text">I have been around computers my entire life and pick up new tools quickly, especially when I have a real problem to apply them to.</p>
+    </div>
+    <div class="trait">
+      <div class="trait-label">Coachable</div>
+      <p class="trait-text">I am at the start of my career and I know it. I am here to grow under experienced people — not to fake expertise I do not have.</p>
+    </div>
+  </div>
+</section>
+
+<div class="contact-strip reveal" id="contact">
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-heading">Let's<br><em>build something.</em></h2>
+      <p class="contact-sub">Open to opportunities — feel free to reach out anytime.</p>
+    </div>
+    <div class="contact-details">
+      <a href="mailto:choydog18@gmail.com" class="contact-link">
+        choydog18@gmail.com
+      </a>
+      <a href="tel:+639530417007" class="contact-link">
+        +63 953 041 7007
+      </a>
+      <a href="mailto:choydog18@gmail.com" class="btn btn-primary" style="margin-top:8px; width:auto; padding:12px 28px; border-radius:0;">Send me an email →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>Mark G. Lim · Davao Region, Philippines</span>
+  <span>Built April 2026</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Modal logic
+  const cards = document.querySelectorAll('.project-card');
+  const modals = document.querySelectorAll('[data-modal]');
+  const closeBtns = document.querySelectorAll('[data-close]');
+
+  function openModal(id) {
+    const modal = document.getElementById('modal-' + id);
+    if (!modal) return;
+    modal.classList.add('open');
+    document.body.classList.add('modal-locked');
+  }
+
+  function closeAllModals() {
+    modals.forEach(m => m.classList.remove('open'));
+    document.body.classList.remove('modal-locked');
+  }
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => openModal(card.dataset.project));
+  });
+
+  closeBtns.forEach(btn => {
+    btn.addEventListener('click', closeAllModals);
+  });
+
+  modals.forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeAllModals();
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAllModals();
+  });
+</script>
+</body>
+</html>
